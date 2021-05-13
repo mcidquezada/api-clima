@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Weather</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            color: aliceblue;
+            flex-direction: column;
+            background-repeat: no-repeat;
+            background-image: url(https://fondosmil.com/fondo/20337.jpg);
+            background-size: cover;
+
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 50px 10px 20px;
+        }
+
+        .header input {
+            width: 100%;
+            max-width: 850px;
+            padding: 10px;
+            border-radius: 20px 20px 20px 20px;
+            border-bottom: 3px solid black;
+        }
+
+        .header input::-webkit-input-placeholder {
+            text-align: center;
+        }
+
+        main {
+            padding: 25px;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .ciudad {
+            font-size: 70px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .pronostico {
+            font-size: 55px;
+        }
+
+        .fecha {
+            font-size: 18px;
+        }
+
+        .temperatura {
+            font-size: 150px;
+            font-weight: 700;
+            margin: 0px 5px;
+            text-shadow: 3px 10px black;
+        }
+
+        .clima {
+            font-weight: 700;
+            font-size: 40px;
+            font-style: oblique;
+            margin-bottom: 10px;
+        }
+
+        .min-max {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .img {
+            width: 185px;
+            height: 150px;
+            display: block;
+            margin: auto;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('form').submit(function () {
+                let city = $('.caja-busqueda').val();
+                let key = '960c074e5fd332d9a69dc835401dd9ca';
+                let url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + key + '&units=metric&lang=es';
+                $.get(url, function (data) {
+                    $(".ciudad").html(data.name)
+                    $(".pronostico").html(data.weather[0].description);
+                    $(".temperatura").html(`${data.main.temp} °C`);
+                    let icono = data.weather[0].icon;
+                    $(".img").css("background", "url('http://openweathermap.org/img/wn/" + icono + "@4x.png')");
+                }, 'json');
+                // don't forget to return false so the page doesn't refresh
+                return false;
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <form action="">
+            <div class="header">
+                <input type="text" class="caja-busqueda" placeholder="Encuentra tu ciudad">
+            </div>
+            <main>
+                <section>
+                    <div class="ciudad"></div>
+                    <div class="pronostico"></div>
+                    <div class="img"></div>
+                </section>
+                <div class="datos">
+                    <div class="temperatura"></div>
+                    <div class="clima"></div>
+
+                </div>
+            </main>
+        </form>
+    </div>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
